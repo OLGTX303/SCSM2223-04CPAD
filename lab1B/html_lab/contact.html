@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact page with a complete and styled HTML form.">
+    <link rel="stylesheet" href="style.css">
+    <title>Zuo Boyu | Contact</title>
+</head>
+<body>
+    <div class="site-shell">
+        <nav class="site-nav" aria-label="Primary">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">ZB</span>
+                <span class="brand-text">Zuo Boyu</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="academic.html">Academic</a></li>
+                <li><a class="active" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <header class="section-heading section-heading-standalone">
+            <p class="eyebrow">Contact</p>
+            <h1>Send a message</h1>
+            <p>Use the form below to discuss collaboration, academic questions or project opportunities.</p>
+        </header>
+
+        <main class="page-main">
+            <section class="panel form-panel">
+                <h2>Contact Me</h2>
+                <form class="contact-form" action="#" method="post">
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="fullname">Full Name</label>
+                            <input type="text" id="fullname" name="fullname" placeholder="Your full name" maxlength="60" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="name@example.com" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="e.g. +60 12-345 6789" maxlength="20" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" min="18" max="100" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="date">Preferred Contact Date</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="interest">Project Interest Level</label>
+                            <input type="range" id="interest" name="interest" min="1" max="10">
+                            <small>Range from 1 to 10</small>
+                        </div>
+
+                        <div class="field field-wide">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject" required>
+                                <optgroup label="Academic">
+                                    <option value="assignment">Assignment Discussion</option>
+                                    <option value="project">Course Project</option>
+                                </optgroup>
+                                <optgroup label="Professional">
+                                    <option value="internship">Internship Opportunity</option>
+                                    <option value="collaboration">Collaboration Request</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <fieldset class="field field-wide">
+                            <legend>Services Interested In</legend>
+                            <label class="choice"><input type="checkbox" id="webdesign" name="services" value="webdesign"> Web Design</label>
+                            <label class="choice"><input type="checkbox" id="frontend" name="services" value="frontend"> Front-end Development</label>
+                            <label class="choice"><input type="checkbox" id="consultation" name="services" value="consultation"> Technical Consultation</label>
+                        </fieldset>
+
+                        <fieldset class="field field-wide">
+                            <legend>Preferred Contact Method</legend>
+                            <label class="choice"><input type="radio" id="contact-email" name="contact_method" value="email" required> Email</label>
+                            <label class="choice"><input type="radio" id="contact-phone" name="contact_method" value="phone"> Phone</label>
+                            <label class="choice"><input type="radio" id="contact-whatsapp" name="contact_method" value="whatsapp"> WhatsApp</label>
+                        </fieldset>
+
+                        <div class="field field-wide">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" placeholder="Write your message here" maxlength="500" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="button glass-button" type="submit">Send Message</button>
+                        <button class="button glass-button button-secondary" type="reset">Reset Form</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p><small>&copy; 2026 Zuo Boyu. All rights reserved.</small></p>
+            <p>Email: <a href="mailto:boyu@graduate.utm.my">boyu@graduate.utm.my</a> | Phone: <a href="tel:+60177967803">+60 177967803</a> | Johor Bahru, Malaysia</p>
+        </footer>
+    </div>
+</body>
+</html>

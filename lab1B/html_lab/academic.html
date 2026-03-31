@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Academic record page with a styled and accessible HTML table.">
+    <link rel="stylesheet" href="style.css">
+    <title>Zuo Boyu | Academic Record</title>
+</head>
+<body>
+    <div class="site-shell">
+        <nav class="site-nav" aria-label="Primary">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">ZB</span>
+                <span class="brand-text">Zuo Boyu</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a class="active" href="academic.html">Academic</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <header class="section-heading section-heading-standalone">
+            <p class="eyebrow">Academic</p>
+            <h1>Year 2 academic performance</h1>
+            <p>This table keeps the original course data while adding clear hierarchy, spacing and alternating row colours.</p>
+        </header>
+
+        <main class="page-main">
+            <section class="panel">
+                <h2>Academic Record</h2>
+                <p>This page presents my Year 2 academic performance in a structured table format.</p>
+                <div class="table-wrap">
+                    <table class="results-table">
+                        <caption>Year 2 Academic Results</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" rowspan="2">Course Code</th>
+                                <th scope="col" rowspan="2">Course Name</th>
+                                <th scope="col" colspan="2">Semester 1 &amp; 2</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Credits</th>
+                                <th scope="col">Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">SCSM2223</th>
+                                <td>Web Programming</td>
+                                <td>3</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">SCST1223</th>
+                                <td>Probability &amp; Statistical Data Analysis</td>
+                                <td>3</td>
+                                <td>A-</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">SCSR1213</th>
+                                <td>Computer Networks</td>
+                                <td>3</td>
+                                <td>B+</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">SCSJ1023</th>
+                                <td>Object Oriented Programming</td>
+                                <td>3</td>
+                                <td>A</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><strong>Total</strong></td>
+                                <td><strong>12</strong></td>
+                                <td><strong>Average: A-</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p><small>&copy; 2026 Zuo Boyu. All rights reserved.</small></p>
+            <p>Email: <a href="mailto:boyu@graduate.utm.my">boyu@graduate.utm.my</a> | Phone: <a href="tel:+60177967803">+60 177967803</a> | Johor Bahru, Malaysia</p>
+        </footer>
+    </div>
+</body>
+</html>
