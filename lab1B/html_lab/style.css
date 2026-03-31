@@ -17,6 +17,12 @@
     --color-card: #ffffff;
     --color-text: #203041;
     --color-text-muted: #5f7287;
+    --color-text-strong: #111111;
+    --color-text-dark: #000000;
+    --color-header-surface: rgba(255, 255, 255, 0.82);
+    --color-main-surface: rgba(255, 255, 255, 0.42);
+    --color-footer-surface: #12304f;
+    --color-nav-surface: rgba(255, 255, 255, 0.18);
     --color-line: #c7d4e3;
     --color-line-strong: #91a9c1;
     --color-shadow: rgba(11, 32, 54, 0.14);
@@ -90,6 +96,18 @@ body {
     background:
         radial-gradient(circle at top left, rgba(121, 184, 255, 0.2), transparent 30%),
         linear-gradient(180deg, var(--color-surface), var(--color-surface-alt));
+}
+
+header {
+    color: var(--color-text);
+}
+
+main {
+    color: var(--color-text);
+}
+
+footer {
+    color: var(--color-card);
 }
 
 img {
@@ -226,6 +244,8 @@ mark {
     --r: var(--radius-lg);
     margin-bottom: var(--space-lg);
     padding: var(--space-md);
+    color: var(--color-text-dark);
+    background-color: var(--color-nav-surface);
     border: 1px double rgba(51, 51, 51, 0.08);
     border-radius: var(--r);
     background: linear-gradient(
@@ -325,7 +345,7 @@ mark {
     --r: 999rem;
     border: 0.1rem solid rgba(255, 255, 255, 0.14);
     border-radius: var(--r);
-    color: #111111;
+    color: var(--color-text-strong);
     font-weight: 600;
     text-decoration: none;
     background: linear-gradient(
@@ -385,7 +405,7 @@ mark {
         transparent 75%,
         rgba(255, 255, 255, 0.8) 100%
     );
-    color: #000000;
+    color: var(--color-text-dark);
     box-shadow:
         inset 2px -2px -1px rgba(255, 255, 255, 0.9),
         inset -2px 2px 1px -1px rgba(255, 255, 255, 0.9),
@@ -405,7 +425,7 @@ mark {
         transparent 75%,
         rgba(255, 255, 255, 0.8) 100%
     );
-    color: #000000;
+    color: var(--color-text-dark);
 }
 
 .hero {
@@ -416,6 +436,8 @@ mark {
     margin-bottom: var(--space-xl);
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
+    color: var(--color-text);
+    background-color: var(--color-header-surface);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(232, 238, 246, 0.72));
     box-shadow: var(--shadow-card);
 }
@@ -443,11 +465,11 @@ mark {
 .panel {
     position: relative;
     overflow: hidden;
-    /* Margin separates panels from neighbouring blocks so sections breathe consistently. */
+   
     margin: 0;
-    /* Padding creates interior reading space around the content. */
+   
     padding: var(--space-lg);
-    /* Border defines the panel edge independently from spacing. */
+    
     border: 0.1rem solid var(--color-line);
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.88);
@@ -489,18 +511,20 @@ mark {
     gap: var(--space-lg);
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
+    background-color: var(--color-main-surface);
     background: rgba(255, 255, 255, 0.42);
 }
 
 .section-heading-standalone {
     padding: var(--space-lg) var(--space-lg) var(--space-lg) calc(var(--space-lg) + 1.4rem);
     border-radius: var(--radius-lg);
+    color: var(--color-text);
+    background-color: var(--color-header-surface);
     background: rgba(255, 255, 255, 0.82);
     box-shadow: var(--shadow-soft);
 }
 
 .card-grid,
-.list-grid,
 .project-grid,
 .form-grid,
 .content-main {
@@ -509,14 +533,19 @@ mark {
     gap: var(--space-md);
 }
 
+.card-grid {
+    max-width: 86rem;
+    margin-inline: auto;
+}
+
 .card {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    /* Margin is kept at zero so the grid gap controls spacing between cards. */
+    
     margin: 0;
-    /* Padding gives each card internal breathing room around heading, text and button. */
+    
     padding: var(--space-lg);
-    /* Border outlines each card to make the box model visible without changing spacing. */
+   
     border: 0.1rem solid var(--color-line);
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.92);
@@ -545,6 +574,16 @@ mark {
     gap: var(--space-md);
 }
 
+.list-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.list-grid > .panel {
+    flex: 1 1 28rem;
+}
+
 .feature-list,
 .clean-list {
     padding-left: 1.8rem;
@@ -552,11 +591,11 @@ mark {
 
 .feature-list li,
 .clean-list > li {
-    /* Margin separates each list item from the next without increasing its clickable interior. */
+   
     margin: 0;
-    /* Padding gives each item a banded row feel and improves scanability. */
+    
     padding: 1rem 0;
-    /* Border draws row dividers while leaving margin and padding roles clear. */
+    
     border-top: 0.1rem solid var(--color-line);
     border-bottom: 0.1rem solid var(--color-line);
 }
@@ -618,7 +657,7 @@ mark {
 
 .results-table th,
 .results-table td {
-    /* Margin does not affect table cells, so spacing is expressed with padding and borders here. */
+    
     padding: 1.2rem;
     border: 0.1rem solid var(--color-line);
     text-align: left;
@@ -649,11 +688,11 @@ mark {
 }
 
 fieldset.field {
-    /* Margin is reset so fieldsets align cleanly within the grid. */
+    
     margin: 0;
-    /* Padding creates room around grouped options. */
+   
     padding: var(--space-md);
-    /* Border separates grouped choices from other fields. */
+    
     border: 0.1rem solid var(--color-line);
     border-radius: var(--radius-md);
 }
@@ -799,6 +838,7 @@ input[type='radio'] {
     margin-top: var(--space-xl);
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
+    background-color: var(--color-footer-surface);
     background: linear-gradient(135deg, var(--color-primary-strong), var(--color-primary));
     color: var(--color-card);
 }
@@ -845,10 +885,14 @@ input[type='radio'] {
     }
 
     .card-grid,
-    .list-grid,
     .project-grid,
     .form-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .list-grid {
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
     .field-wide,
@@ -869,7 +913,7 @@ input[type='radio'] {
     }
 
     .card-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
     }
 
     .card-featured {
