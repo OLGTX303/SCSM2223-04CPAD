@@ -26,8 +26,6 @@
     --color-line: #c7d4e3;
     --color-line-strong: #91a9c1;
     --color-shadow: rgba(11, 32, 54, 0.14);
-    --color-shadow-strong: rgba(11, 32, 54, 0.24);
-    --color-glass-border: rgba(255, 255, 255, 0.56);
     --font-body: 'Manrope', sans-serif;
     --font-heading: 'Literata', serif;
     --space-xs: 0.8rem;
@@ -42,37 +40,6 @@
     --shadow-soft: 0 1rem 2rem rgba(18, 48, 79, 0.08);
     --shadow-focus: 0 0 0 0.3rem rgba(121, 184, 255, 0.35);
     --max-width: 120rem;
-}
-
-@keyframes glass-shift {
-    0% {
-        transform: translateX(-8%) translateY(0) scale(1);
-        opacity: 0.72;
-    }
-
-    50% {
-        transform: translateX(6%) translateY(-4%) scale(1.08);
-        opacity: 0.92;
-    }
-
-    100% {
-        transform: translateX(12%) translateY(-8%) scale(1.14);
-        opacity: 0.78;
-    }
-}
-
-@keyframes glass-tint {
-    0% {
-        filter: hue-rotate(0deg) saturate(1);
-    }
-
-    50% {
-        filter: hue-rotate(10deg) saturate(1.12);
-    }
-
-    100% {
-        filter: hue-rotate(-6deg) saturate(1.04);
-    }
 }
 
 *,
@@ -465,11 +432,8 @@ mark {
 .panel {
     position: relative;
     overflow: hidden;
-   
     margin: 0;
-   
     padding: var(--space-lg);
-    
     border: 0.1rem solid var(--color-line);
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.88);
@@ -524,7 +488,6 @@ mark {
     box-shadow: var(--shadow-soft);
 }
 
-.card-grid,
 .project-grid,
 .form-grid,
 .content-main {
@@ -534,6 +497,9 @@ mark {
 }
 
 .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+    gap: var(--space-md);
     max-width: 86rem;
     margin-inline: auto;
 }
@@ -541,11 +507,8 @@ mark {
 .card {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    
     margin: 0;
-    
     padding: var(--space-lg);
-   
     border: 0.1rem solid var(--color-line);
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.92);
@@ -591,11 +554,8 @@ mark {
 
 .feature-list li,
 .clean-list > li {
-   
     margin: 0;
-    
     padding: 1rem 0;
-    
     border-top: 0.1rem solid var(--color-line);
     border-bottom: 0.1rem solid var(--color-line);
 }
@@ -657,7 +617,6 @@ mark {
 
 .results-table th,
 .results-table td {
-    
     padding: 1.2rem;
     border: 0.1rem solid var(--color-line);
     text-align: left;
@@ -688,11 +647,8 @@ mark {
 }
 
 fieldset.field {
-    
     margin: 0;
-   
     padding: var(--space-md);
-    
     border: 0.1rem solid var(--color-line);
     border-radius: var(--radius-md);
 }
