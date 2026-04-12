@@ -46,5 +46,6 @@
 </p>
 
 <p>
-  <strong><a href="./Lab2/demo.mp4">Watch the Lab2 demo video</a></strong>
+  <strong><a href="./Lab2/demo.mp4">Watch the Lab2 demo video</a></strong><br>
+  Compressed 1080p MP4, under 10 MB.
 </p>
