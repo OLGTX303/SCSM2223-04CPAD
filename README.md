@@ -1,7 +1,5 @@
 
 
-https://github.com/user-attachments/assets/8d90a1b0-7c8c-465d-b6b3-534de4d4a56b
-
 # SCSM2223-04CPAD
 
 ## ZUO BOYU A24CS4045 Projects
@@ -45,13 +43,16 @@ https://github.com/user-attachments/assets/8d90a1b0-7c8c-465d-b6b3-534de4d4a56b
 
 <p>
   <a href="./Lab2/demo.mp4">
-    <img src="./assets
-https://github.com/user-attachments/assets/0e308d67-5926-4e80-b936-f8a6ed7bfb50
-readme-thumbnails/lab2.svg" alt="Open Lab2 demo video" width="420">
+    <img src="./assets/readme-thumbnails/lab2.svg" alt="Open Lab2 demo video" width="420">
   </a>
 </p>
 
+
+https://github.com/user-attachments/assets/0e308d67-5926-4e80-b936-f8a6ed7bfb50
+
+
 <p>
-  <strong><a href="./Lab2/demo.mp4">Watch the Lab2 demo video</a></strong><br>
+  <strong>Watch the Lab2 demo video</a></strong><br>
+  
   Compressed 1080p MP4, under 10 MB.
 </p>
