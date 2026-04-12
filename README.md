@@ -36,3 +36,15 @@
     </td>
   </tr>
 </table>
+
+## Lab2 Demo
+
+<p>
+  <a href="./Lab2/demo.mp4">
+    <img src="./assets/readme-thumbnails/lab2.svg" alt="Open Lab2 demo video" width="420">
+  </a>
+</p>
+
+<p>
+  <strong><a href="./Lab2/demo.mp4">Watch the Lab2 demo video</a></strong>
+</p>
