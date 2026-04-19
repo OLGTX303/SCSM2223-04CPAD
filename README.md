@@ -37,6 +37,16 @@
       <strong><a href="./QuickNotes_Lab_StepByStep/">QuickNotes_Lab_StepByStep</a></strong>
     </td>
   </tr>
+  <tr>
+    <td align="center">
+      <a href="./Lab_Exercise_3/">
+        <img src="./assets/readme-thumbnails/lab3.svg" alt="Lab Exercise 3 thumbnail" width="260">
+      </a>
+      <br>
+      <strong><a href="./Lab_Exercise_3/">Lab_Exercise_3</a></strong>
+    </td>
+    <td></td>
+  </tr>
 </table>
 
 ## Lab2 Demo
