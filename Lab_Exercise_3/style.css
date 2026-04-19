@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,27 +9,33 @@
 :root {
   color-scheme: light;
   --bg: #eef4ff;
-  --surface: #ffffff;
-  --surface-soft: #f7faff;
-  --line: #d9e2f1;
-  --line-strong: #bfd0e9;
-  --text: #152235;
-  --muted: #62748a;
-  --primary: #2563eb;
-  --primary-deep: #1d4ed8;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-soft: rgba(255, 255, 255, 0.72);
+  --line: #c7d4e3;
+  --line-strong: #91a9c1;
+  --text: #203041;
+  --muted: #5f7287;
+  --primary: #12304f;
+  --primary-deep: #0b2036;
+  --accent: #79b8ff;
+  --accent-warm: #f2c38b;
   --danger: #dc2626;
   --danger-bg: #fee2e2;
   --success: #0f766e;
-  --shadow: 0 18px 48px rgba(17, 24, 39, 0.10);
+  --font-body: 'Manrope', sans-serif;
+  --font-heading: 'Literata', serif;
+  --shadow: 0 1.8rem 4rem rgba(11, 32, 54, 0.14);
+  --shadow-soft: 0 1rem 2rem rgba(18, 48, 79, 0.08);
+  --shadow-focus: 0 0 0 0.3rem rgba(121, 184, 255, 0.35);
 }
 
 body {
   background:
-    radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 30%),
-    radial-gradient(circle at top right, rgba(14, 165, 233, 0.14), transparent 24%),
+    radial-gradient(circle at top left, rgba(121, 184, 255, 0.2), transparent 30%),
+    radial-gradient(circle at top right, rgba(242, 195, 139, 0.12), transparent 22%),
     var(--bg);
   color: var(--text);
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   min-height: 100vh;
   padding: 32px 20px 48px;
 }
@@ -42,6 +50,14 @@ button {
   cursor: pointer;
 }
 
+.page-shell a:link {
+  color: var(--primary);
+}
+
+.page-shell a:hover {
+  color: var(--primary-deep);
+}
+
 .page-shell {
   margin: 0 auto;
   max-width: 1180px;
@@ -51,8 +67,8 @@ button {
 .card,
 .error-banner {
   backdrop-filter: blur(16px);
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(217, 226, 241, 0.94);
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.42);
   box-shadow: var(--shadow);
 }
 
@@ -64,11 +80,12 @@ button {
   grid-template-columns: 1.5fr 1fr;
   margin-bottom: 20px;
   padding: 28px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(232, 238, 246, 0.72));
 }
 
 .eyebrow,
 .section-label {
-  color: var(--primary);
+  color: var(--muted);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -76,6 +93,8 @@ button {
 }
 
 .hero h1 {
+  color: var(--primary-deep);
+  font-family: var(--font-heading);
   font-size: clamp(2.4rem, 4vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -89,9 +108,10 @@ button {
 }
 
 .search-panel {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(243, 247, 255, 0.96));
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.48);
   border-radius: 22px;
+  box-shadow: var(--shadow-soft);
   padding: 20px;
 }
 
@@ -109,17 +129,20 @@ button {
 }
 
 .search-row input {
-  background: #fff;
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line-strong);
   border-radius: 16px;
   color: var(--text);
   min-width: 0;
   padding: 14px 16px;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
 .search-row input:focus {
-  border-color: var(--primary);
-  outline: 2px solid rgba(37, 99, 235, 0.14);
+  background: rgba(255, 255, 255, 0.98);
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: var(--shadow-focus);
 }
 
 .search-row button,
@@ -131,9 +154,34 @@ button {
 }
 
 .search-row button,
+.error-banner button,
+.recent-chip,
+.unit-btn,
+.retry-btn-like {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px double rgba(51, 51, 51, 0.08);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 25%,
+    transparent 75%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  box-shadow:
+    inset 2px -2px -1px rgba(255, 255, 255, 0.9),
+    inset -2px 2px 1px -1px rgba(255, 255, 255, 0.9),
+    inset 6px -6px 1px -6px rgba(255, 255, 255, 0.55),
+    inset -6px 6px 1px -6px rgba(255, 255, 255, 0.55),
+    inset 0 0 2px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  color: var(--primary-deep);
+  filter: contrast(3) drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+.search-row button,
 .error-banner button {
-  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
-  color: #fff;
   padding: 14px 20px;
 }
 
@@ -152,8 +200,6 @@ button {
 }
 
 .recent-chip {
-  background: #dbeafe;
-  color: var(--primary-deep);
   padding: 8px 12px;
 }
 
@@ -166,6 +212,7 @@ button {
   justify-content: space-between;
   margin-bottom: 20px;
   padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .error-banner.is-hidden {
@@ -180,6 +227,7 @@ button {
 .card {
   border-radius: 26px;
   padding: 24px;
+  background: rgba(255, 255, 255, 0.42);
 }
 
 .card-heading {
@@ -191,6 +239,8 @@ button {
 }
 
 .card-heading h2 {
+  color: var(--primary-deep);
+  font-family: var(--font-heading);
   font-size: 1.6rem;
   margin-top: 8px;
 }
@@ -203,7 +253,7 @@ button {
 
 .temp-display {
   align-items: start;
-  background: linear-gradient(180deg, #f7fbff, #eef4ff);
+  background: rgba(255, 255, 255, 0.82);
   border: 1px solid var(--line);
   border-radius: 24px;
   display: flex;
@@ -244,9 +294,10 @@ button {
 
 .metric-card,
 .forecast-card {
-  background: var(--surface-soft);
+  background: rgba(255, 255, 255, 0.84);
   border: 1px solid var(--line);
   border-radius: 22px;
+  box-shadow: var(--shadow-soft);
 }
 
 .metric-card {
@@ -315,21 +366,19 @@ button {
 }
 
 .unit-toggle {
-  background: #edf4ff;
+  background: rgba(255, 255, 255, 0.42);
   border-radius: 999px;
   display: inline-flex;
   padding: 4px;
 }
 
 .unit-btn {
-  background: transparent;
   color: var(--muted);
   padding: 10px 14px;
 }
 
 .unit-btn.is-active {
-  background: #fff;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.85);
   color: var(--primary-deep);
 }
 
@@ -348,6 +397,20 @@ button {
   animation: shimmer 1.5s infinite;
   border-radius: 8px;
   color: transparent !important;
+}
+
+.search-row button:hover,
+.error-banner button:hover,
+.recent-chip:hover,
+.unit-btn:hover {
+  border-color: rgba(255, 255, 255, 0.68);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 0.1rem 0 rgba(255, 255, 255, 0.98),
+    inset 0 -0.1rem 0 rgba(255, 255, 255, 0.22),
+    inset 0.8rem 1rem 1.8rem rgba(255, 255, 255, 0.22),
+    inset -1rem -1.4rem 2rem rgba(12, 28, 48, 0.14),
+    0 1.8rem 3.4rem rgba(11, 32, 54, 0.22);
 }
 
 .skeleton-text {
