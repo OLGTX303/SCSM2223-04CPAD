@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeatherNow Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Chapter 4 Lab Exercise 3</p>
+        <h1>WeatherNow</h1>
+        <p class="hero-copy">Real-time weather and time data using the Fetch API, jQuery AJAX, JSON transformation, and resilient loading states.</p>
+      </div>
+
+      <div class="search-panel">
+        <label class="search-label" for="cityInput">Search City</label>
+        <div class="search-row">
+          <input id="cityInput" type="text" placeholder="Search for a city">
+          <button id="searchBtn" type="button">Search</button>
+        </div>
+        <p id="validationMessage" class="helper-message" aria-live="polite"></p>
+        <div id="recentSearches" class="recent-searches" aria-label="Recent searches"></div>
+      </div>
+    </header>
+
+    <div id="errorBanner" class="error-banner is-hidden" role="alert">
+      <div>
+        <strong>Request failed.</strong>
+        <span id="errorMessage">Please try again.</span>
+      </div>
+      <button id="retryBtn" type="button">Retry</button>
+    </div>
+
+    <main class="dashboard">
+      <section class="current-weather card">
+        <div class="card-heading">
+          <div>
+            <p class="section-label">Current Weather</p>
+            <h2 id="cityName" class="skeleton skeleton-text skeleton-title">Loading city</h2>
+          </div>
+          <div class="unit-toggle">
+            <button id="celsiusBtn" class="unit-btn is-active" type="button">°C</button>
+            <button id="fahrenheitBtn" class="unit-btn" type="button">°F</button>
+          </div>
+        </div>
+
+        <div class="current-layout">
+          <div class="temp-display">
+            <div id="weatherIcon" class="weather-icon skeleton skeleton-circle"></div>
+            <p id="temperatureValue" class="temperature skeleton skeleton-number">--</p>
+            <p id="weatherDescription" class="weather-description skeleton skeleton-text">Loading description</p>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <span class="metric-label">Humidity</span>
+              <strong id="humidityValue" class="metric-value skeleton skeleton-text">--</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Wind Speed</span>
+              <strong id="windValue" class="metric-value skeleton skeleton-text">--</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Local Time</span>
+              <strong id="timeValue" class="metric-value skeleton skeleton-text">--</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Coordinates</span>
+              <strong id="coordinateValue" class="metric-value skeleton skeleton-text">--</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="forecast-panel card">
+        <div class="card-heading">
+          <div>
+            <p class="section-label">7-Day Forecast</p>
+            <h2>Week Outlook</h2>
+          </div>
+        </div>
+        <div id="forecastRow" class="forecast-row"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
