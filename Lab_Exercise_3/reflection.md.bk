@@ -1,9 +1,0 @@
-# Reflection
-
-In this lab, I used both the Fetch API and jQuery AJAX in the same WeatherNow dashboard, so I could compare them in a practical way instead of only reading about them. For the geocoding and weather requests, I used Fetch with `async/await`. I found this approach easier to read because the chained city-to-coordinates-to-weather flow looks almost like normal step-by-step logic. In terms of syntax verbosity, Fetch can feel slightly longer because I must check `response.ok`, parse JSON manually, and manage timeout control myself, but the code is still very clear.
-
-For the local time request, I used jQuery with `$.getJSON()` and the `.done()`, `.fail()`, and `.always()` chain. jQuery is shorter for small requests, but its promise chaining style feels older and less natural than `async/await`. It works well, especially for quick success and failure handling, but once the logic becomes more complex, I think Fetch is easier to follow and maintain.
-
-Error handling was another important difference. With Fetch, I could combine `try/catch`, HTTP status checks, and `AbortController` timeout logic in one structured flow. With jQuery AJAX, the `.fail()` handler is simple, but it does not feel as flexible when I want more detailed control. For browser support, jQuery AJAX used to be more attractive because of legacy browser compatibility, but in modern browsers Fetch is now widely supported and better suited to current JavaScript style.
-
-Overall, I prefer Fetch because it is cleaner for dependent requests, easier to scale, and more consistent with modern JavaScript development. I would still use jQuery AJAX when working in an older project that already depends on jQuery.
