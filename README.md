@@ -54,7 +54,7 @@
 <p>
   <strong>WeatherNow - JSON, AJAX, Fetch API, and jQuery</strong><br>
   Folder: <a href="./Lab_Exercise_3/">Lab_Exercise_3</a><br>
-  Submission document: <a href="./Lab_Exercise_3/reflectionand%20screenshot.docx">reflectionand screenshot.docx</a>
+  Reflection: <a href="./Lab_Exercise_3/reflection.md">reflection.md</a>
 </p>
 
 <p>

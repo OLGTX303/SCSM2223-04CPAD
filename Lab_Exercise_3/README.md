@@ -14,7 +14,6 @@ This lab builds a real-time weather dashboard using:
 - [style.css](./style.css)
 - [app.js](./app.js)
 - [reflection.md](./reflection.md)
-- [reflectionand screenshot.docx](./reflectionand%20screenshot.docx)
 
 ## Deliverables Preview
 
