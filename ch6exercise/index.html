@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Lab - Profile Card</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 2rem;
+      transition: background 0.3s;
+    }
+
+    body.dark {
+      background: #0f172a;
+    }
+
+    #app {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid #42b883;
+      object-fit: cover;
+    }
+
+    .title {
+      color: #42b883;
+      font-weight: 600;
+      margin: 0.25rem 0 1rem;
+    }
+
+    .bio {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .dark .card {
+      background: #1e293b;
+      color: #f1f5f9;
+    }
+
+    .dark .bio {
+      color: #94a3b8;
+    }
+
+    .editor {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 16px;
+      margin-top: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .editor h3 {
+      margin-top: 0;
+      color: #35495e;
+    }
+
+    .editor label {
+      display: block;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .editor input[type="text"],
+    .editor input[type="file"],
+    .editor textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 1rem;
+      margin-top: 0.25rem;
+      box-sizing: border-box;
+    }
+
+    .dark .editor {
+      background: #1e293b;
+      color: #f1f5f9;
+    }
+
+    .skills {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+    }
+
+    .skills li {
+      display: inline-flex;
+      align-items: center;
+      background: #ecfdf5;
+      color: #065f46;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      margin: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    .skills li button {
+      background: none;
+      border: none;
+      color: #065f46;
+      margin-left: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background: #42b883;
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      background: #33a06f;
+    }
+
+    .btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .dark .skills li {
+      background: #064e3b;
+      color: #6ee7b7;
+    }
+
+    .muted {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" :class="{ dark: darkMode }">
+    <section class="card">
+      <img :src="avatar" :alt="name" class="avatar">
+      <h2>{{ name }}</h2>
+      <p class="title">{{ title }}</p>
+      <p class="bio">{{ bio }}</p>
+
+      <ul class="skills">
+        <li v-for="(skill, i) in skills" :key="skill">
+          {{ skill }}
+          <button @click="removeSkill(i)" title="Remove">&times;</button>
+        </li>
+      </ul>
+
+      <p v-if="skillCount === 0" class="muted">
+        No skills yet - add your first skill to get started.
+      </p>
+      <p v-else class="muted">
+        Listed <strong>{{ skillCount }}</strong>
+        skill<span v-if="skillCount !== 1">s</span>.
+      </p>
+    </section>
+
+    <section class="editor">
+      <h3>Edit Profile</h3>
+
+      <label>
+        Name:
+        <input v-model="name" type="text">
+      </label>
+
+      <label>
+        Title:
+        <input v-model="title" type="text">
+      </label>
+
+      <label>
+        Bio:
+        <textarea v-model="bio" rows="3"></textarea>
+      </label>
+
+      <label>
+        Add a skill:
+        <input
+          v-model="newSkill"
+          @keyup.enter="addSkill"
+          placeholder="e.g. Node.js"
+          type="text"
+        >
+      </label>
+
+      <button class="btn" @click="addSkill" :disabled="!newSkill.trim()">+ Add skill</button>
+
+      <label>
+        Upload avatar:
+        <input type="file" accept="image/*" @change="onAvatarChange">
+      </label>
+
+      <label>
+        <input type="checkbox" v-model="darkMode"> Dark mode
+      </label>
+    </section>
+  </div>
+
+  <script>
+    const { createApp, ref, computed, watch } = Vue
+
+    createApp({
+      setup() {
+        const storageKey = 'vue-profile-card'
+        let savedProfile = null
+
+        try {
+          savedProfile = JSON.parse(localStorage.getItem(storageKey) || 'null')
+        } catch (error) {
+          console.warn('Ignoring invalid saved profile:', error)
+        }
+
+        const name = ref(savedProfile?.name ?? 'Chimamanda Ngozi Adichie')
+        const title = ref(savedProfile?.title ?? 'Full-Stack Developer')
+        const bio = ref(savedProfile?.bio ?? 'Loves Vue, coffee, and open-source.')
+        const avatar = ref(savedProfile?.avatar ?? 'www.olgtx.com/assets/blank-profile-picture-973460_1280.png')
+        const darkMode = ref(false)
+        const skills = ref(savedProfile?.skills ?? ['Vue.js', 'JavaScript', 'HTML & CSS'])
+        const newSkill = ref('')
+
+        const skillCount = computed(() => skills.value.length)
+
+        function addSkill() {
+          const s = newSkill.value.trim()
+          if (!s) return
+          if (!skills.value.includes(s)) {
+            skills.value.push(s)
+          }
+          newSkill.value = ''
+        }
+
+        function removeSkill(index) {
+          skills.value.splice(index, 1)
+        }
+
+        function onAvatarChange(event) {
+          const [file] = event.target.files || []
+          if (!file) return
+
+          const reader = new FileReader()
+          reader.onload = () => {
+            avatar.value = reader.result
+          }
+          reader.readAsDataURL(file)
+        }
+
+        watch(name, (n, o) => console.log(o, '->', n))
+
+        watch(darkMode, (isDark) => {
+          document.body.classList.toggle('dark', isDark)
+        }, { immediate: true })
+
+        watch(
+          () => ({
+            name: name.value,
+            title: title.value,
+            bio: bio.value,
+            skills: skills.value,
+            avatar: avatar.value
+          }),
+          (profile) => {
+            localStorage.setItem(storageKey, JSON.stringify(profile))
+          },
+          { deep: true, immediate: true }
+        )
+
+        return {
+          name,
+          title,
+          bio,
+          avatar,
+          darkMode,
+          skills,
+          newSkill,
+          addSkill,
+          removeSkill,
+          skillCount,
+          onAvatarChange
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

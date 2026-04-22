@@ -1,0 +1,157 @@
+--- PAGE 1 ---
+Cross Platform Application Development Lab Exercises   |   Chapter 4 
+Year 2 Degree Programme  |  Faculty of Computing   Page 1 
+Chapter 4:  Lab Exercise 3 
+Fetching Data — AJAX, JSON, Fetch API & jQuery 
+ 
+Exercise Title WeatherNow —  Real-Time Data Dashboard with Fetch API & jQuery 
+Duration 3 Hours (Laboratory Session) 
+Topics Covered Fetch API, AJAX, JSON parsing, jQuery AJAX, CORS, Error handling, UI 
+loading states 
+Difficulty Intermediate —  Challenging 
+ 
+4.1  Overview 
+You will build a real-time Weather Dashboard that retrieves live data from two public APIs using both 
+the native Fetch API and jQuery's $.ajax() method. You will implement proper loading states, error 
+handling, data transformation, and a dynamic UI that updates without page reload. This exercise 
+bridges the gap between static pages and truly data-driven web applications. 
+ 
+4.2  Learning Outcomes 
+• Understand the AJAX request/response cycle and the role of JSON 
+• Make HTTP GET requests using the native Fetch API with async/await 
+• Make HTTP requests using jQuery's $.ajax() and $.getJSON() methods 
+• Parse and transform JSON responses into meaningful UI elements 
+• Handle network errors, HTTP errors, and malformed responses gracefully 
+• Implement skeleton loading screens and error state UI 
+• Chain multiple dependent API calls to build enriched data views 
+ 
+4.3  APIs to Use 
+The following free, no-authentication-required APIs are approved for this exercise: 
+API Endpoint Purpose 
+Open-Meteo api.open-meteo.com/v1/forecast Current weather & 7-day forecast 
+Open-Meteo 
+Geocoding 
+geocoding-api.open-
+meteo.com/v1/search 
+Resolve city name to lat/lon 
+WorldTimeAPI worldtimeapi.org/api/timezone Local time for searched city 
+ 
+
+--- PAGE 2 ---
+Cross Platform Application Development Lab Exercises   |   Chapter 4 
+Year 2 Degree Programme  |  Faculty of Computing   Page 2 
+4.4  Instructions 
+Task 1 HTML & CSS —  Dashboard Shell with Skeleton Loaders 
+ 
+1. Create a search bar at the top with a text input and Search button 
+2. Create a 'current weather' card with placeholders for: city name, temperature, weather 
+description, humidity, wind speed, and time 
+3. Create a 7-day forecast row of 7 cards, each showing: day name, weather icon emoji, high/low 
+temperature 
+4. Implement skeleton loading animation: before data arrives, all card content areas must display a 
+pulsing grey placeholder using CSS @keyframes animation 
+@keyframes shimmer { 
+  0%   { background-position: -200% 0; } 
+  100% { background-position:  200% 0; } 
+} 
+.skeleton { 
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%); 
+  background-size: 200% 100%; 
+  animation: shimmer 1.5s infinite; 
+  border-radius: 4px; 
+} 
+ 
+Task 2 Fetch API —  Geocoding and Weather Data 
+ 
+Implement the following request chain using the Fetch API with async/await: 
+5. On search: call the Geocoding API to resolve the city name into latitude and longitude 
+6. If no city is found (empty results array), show an error state in the UI — do NOT throw 
+7. Using the coordinates, call the Open-Meteo forecast API requesting: current_weather=true, 
+hourly=temperature_2m,relativehumidity_2m,windspeed_10m, 
+daily=temperature_2m_max,temperature_2m_min,weathercode 
+8. On success: remove skeleton classes and populate all UI cards with real data 
+9. Wrap all fetch calls in try/catch — network errors must display an error banner with a retry 
+button 
+10. Convert the weathercode integers into human-readable descriptions and emoji icons using a 
+lookup object (provide the lookup table in your code) 
+ 
+Task 3 jQuery AJAX —  Local Time Integration 
+ 
+Using jQuery (included via CDN), implement the following: 
+11. After the weather data is displayed, use $.getJSON() to call the WorldTimeAPI 
+
+--- PAGE 3 ---
+Cross Platform Application Development Lab Exercises   |   Chapter 4 
+Year 2 Degree Programme  |  Faculty of Computing   Page 3 
+12. Map the city's timezone string and display the local time in the current weather card 
+13. If the timezone is not available, fall back to displaying the browser's local time 
+14. Use jQuery's .done(), .fail(), and .always() chaining methods (not callbacks inside $.ajax) 
+15. In the .always() handler, log a timestamp of the completed request to the browser console 
+ 
+You have now used both Fetch API and jQuery AJAX in the same app. 
+In your reflection, compare: syntax verbosity, promise chaining style, error handling approach, and 
+browser support. Which do you prefer and why? 
+ 
+Task 4 Error Handling & Edge Cases 
+ 
+16. Handle HTTP errors explicitly: if response.ok is false, throw an Error with the HTTP status code 
+included in the message 
+17. If the user searches for an empty string or fewer than 2 characters, show a validation message 
+without making any API call 
+18. Implement a debounce on the search input so that typing quickly does not trigger multiple API 
+calls (debounce delay: 500ms) 
+19. Add a 10-second request timeout — if the API does not respond within 10 seconds, cancel the 
+request using AbortController and show a timeout error 
+const controller = new AbortController(); 
+const timeoutId = setTimeout(() => controller.abort(), 10000); 
+ 
+const response = await fetch(url, { signal: controller.signal }); 
+clearTimeout(timeoutId); 
+ 
+4.5  Bonus Challenge 
+Implement a recent searches history using localStorage. Display the last 5 searched 
+cities as clickable chips below the search bar. Clicking a chip should instantly reload 
+that city's weather. 
+Add a toggle to switch between Celsius and Fahrenheit — the conversion must happen in JavaScript 
+without making a new API call. 
+ 
+4.6  Deliverables 
+# Deliverable Item 
+✓ Project folder containing index.html, style.css (or embedded), and app.js (or embedded) 
+✓ Network request screenshots from Chrome DevTools showing successful API calls and 
+response JSON 
+
+--- PAGE 4 ---
+Cross Platform Application Development Lab Exercises   |   Chapter 4 
+Year 2 Degree Programme  |  Faculty of Computing   Page 4 
+✓ Screenshot of the error state UI (network offline simulation via DevTools) 
+✓ Written reflection (200–300 words) comparing Fetch API vs jQuery AJAX 
+ 
+4.7  Assessment Rubric 
+Assessment Criteria Marks Score 
+Fetch API —  correct chained geocoding → 
+weather requests 
+20  
+JSON parsing —  weathercode lookup and data 
+transformation 
+15  
+jQuery AJAX —  correct .done()/.fail()/.always() 
+chaining 
+10  
+Skeleton loading animation —  displays before 
+data, removes after 
+15  
+Error handling —  HTTP errors, network errors, 
+AbortController timeout 
+15  
+Debounce implementation —  no redundant API 
+calls on rapid typing 
+10  
+UI completeness —  all 7-day cards, current 
+weather, and local time 
+10  
+Code quality —  comments, separation of 
+concerns, no global variables 
+5  
+TOTAL 100  
+ 

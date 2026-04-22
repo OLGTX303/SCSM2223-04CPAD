@@ -1,0 +1,16 @@
+
+<script>
+// ── JSON.parse() ──────────────────────────────────
+// Imagine this string came from a server:
+const jsonString = '{"name":"Ahmad","age":22}';
+// Convert it to a JavaScript object:
+const student = JSON.parse(jsonString);
+console.log(student.name); // Output: Ahmad
+console.log(student.age); // Output: 22
+// ── JSON.stringify() ──────────────────────────────
+const myObject = { name: "Siti", age: 21 };
+// Convert it to a JSON string (to send to server):
+const result = JSON.stringify(myObject);
+console.log(result); // Output: {"name":"Siti","age":21}
+// Pretty-print with indentation (for readability):
+console.log(JSON.stringify(myObject, null, 2));
