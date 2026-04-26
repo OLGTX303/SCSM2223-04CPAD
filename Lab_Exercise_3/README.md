@@ -15,6 +15,16 @@ This lab builds a real-time weather dashboard using:
 - [app.js](./app.js)
 - [reflection.md](./reflection.md)
 
+## Web Preview
+
+GitHub cannot embed a live interactive local HTML app directly inside a README, but the preview below links to this project folder and the source files.
+
+<p align="center">
+  <a href="./index.html">
+    <img src="../assets/lab3-screenshots/web-preview.png" alt="WeatherNow web preview" width="820">
+  </a>
+</p>
+
 ## Deliverables Preview
 
 ### Successful API Call Screenshots

@@ -58,6 +58,17 @@
 </p>
 
 <p>
+  <strong>Web Preview</strong><br>
+  GitHub cannot render a live interactive HTML app directly inside a README, so the preview below links to the project files.
+</p>
+
+<p align="center">
+  <a href="./Lab_Exercise_3/">
+    <img src="./assets/lab3-screenshots/web-preview.png" alt="WeatherNow web preview" width="820">
+  </a>
+</p>
+
+<p>
   This exercise uses the Fetch API for the geocoding to weather request chain and jQuery <code>$.getJSON()</code>
   for local time lookup. Based on the written reflection in the submitted document, Fetch was preferred because
   it is easier to read for dependent requests, scales better, and gives stronger control over HTTP checks,
