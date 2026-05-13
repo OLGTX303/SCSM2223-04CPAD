@@ -1,0 +1,28 @@
+### Create
+POST http://localhost:3000/students
+Content-Type: application/json
+{
+ "matricNo": "A21CS9999",
+ "name": "Test Student",
+ "course": "BSc CS",
+ "faculty": "FSKSM",
+ "gpa": 3.50,
+ "email": "test@graduate.utm.my",
+ "year": 1,
+ "active": true
+}
+### Update (replace <id> with the id returned above)
+PUT http://localhost:3000/students/6
+Content-Type: application/json
+{
+ "matricNo": "A21CS9999",
+ "name": "Test Student (updated)",
+ "course": "BSc CS",
+ "faculty": "FSKSM",
+ "gpa": 3.80,
+ "email": "test@graduate.utm.my",
+ "year": 2,
+ "active": true
+}
+### Delete
+DELETE http://localhost:3000/students/6
