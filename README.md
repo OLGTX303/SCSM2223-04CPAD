@@ -45,9 +45,95 @@
       <br>
       <strong><a href="./Lab_Exercise_3/">Lab_Exercise_3</a></strong>
     </td>
-    <td></td>
+    <td align="center">
+      <a href="./ch8/student-records-app/">
+        <strong>Chapter 8</strong>
+      </a>
+      <br>
+      <strong><a href="./ch8/student-records-app/">Student Records App</a></strong>
+    </td>
   </tr>
 </table>
+
+## Chapter 8 Student Records App
+
+<p>
+  <strong>Student Records Manager - Vue 3, Axios, Express, and MySQL</strong><br>
+  Folder: <a href="./ch8/student-records-app/">ch8/student-records-app</a>
+</p>
+
+This project is a full stack CRUD application for managing student records. The frontend is built with Vue 3 and Vite, the API uses Express, and the data is stored in a MySQL database named <code>student_records</code>.
+
+### Project Structure
+
+```text
+ch8/student-records-app/
+  server/              Express API and MySQL connection
+  sql/schema.sql       Database schema and sample records
+  src/                 Vue frontend source files
+  test.http            API request examples
+  package.json         Frontend dependencies and scripts
+```
+
+The repository excludes dependency folders. Run <code>npm install</code> in the frontend folder and in the backend folder after cloning.
+
+### Database Setup
+
+1. Start MySQL.
+2. Import <a href="./ch8/student-records-app/sql/schema.sql">sql/schema.sql</a>.
+3. Confirm the backend connection settings in <a href="./ch8/student-records-app/server/db.js">server/db.js</a>.
+
+The default backend configuration expects:
+
+```text
+host: localhost
+port: 3306
+user: root
+password:
+database: student_records
+```
+
+### Run The Backend
+
+```bash
+cd ch8/student-records-app/server
+npm install
+node index.js
+```
+
+The API runs at <code>http://localhost:3000</code>.
+
+### Run The Frontend
+
+Open another terminal:
+
+```bash
+cd ch8/student-records-app
+npm install
+npm run dev
+```
+
+The Vite app usually runs at <code>http://localhost:5173</code>.
+
+### API Endpoints
+
+```text
+GET    /                Health check
+GET    /students        List students, with optional q, sortBy, and order query params
+GET    /students/:id    Get one student
+POST   /students        Create a student
+PUT    /students/:id    Update a student
+DELETE /students/:id    Delete a student
+```
+
+### Features
+
+- List student records from MySQL.
+- Add new student records.
+- Edit existing student details.
+- Delete student records.
+- Search and sort through the API.
+- Use Axios request and response interceptors for frontend API calls.
 
 ## Lab Exercise 3
 
