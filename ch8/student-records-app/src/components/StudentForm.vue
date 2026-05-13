@@ -39,7 +39,8 @@ function onCancel() {
 
 import { ref, watch, computed } from 'vue'
 const props = defineProps({
- editingStudent: { type: Object, default: null }
+ editingStudent: { type: Object, default: null },
+ serverErrors: { type: Object, default: () => ({}) }
 })
 const emit = defineEmits(['save', 'cancel'])
 const emptyForm = () => ({
@@ -52,6 +53,9 @@ watch(() => props.editingStudent, (val) => {
  form.value = val ? { ...val } : emptyForm()
  errors.value = {}
 }, { immediate: true })
+watch(() => props.serverErrors, (val) => {
+ errors.value = { ...val }
+})
 const isEditing = computed(() => Boolean(props.editingStudent))
 </script>
 

@@ -19,16 +19,17 @@ The repository excludes dependency folders. Run `npm install` in the frontend fo
 
 1. Start MySQL.
 2. Import `sql/schema.sql`.
-3. Confirm the backend connection settings in `server/db.js`.
+3. Copy `server/.env.example` to `server/.env`.
+4. Confirm the backend connection settings in `server/.env`.
 
 The default backend configuration expects:
 
 ```text
-host: localhost
-port: 3306
-user: root
-password:
-database: student_records
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=student_records
 ```
 
 ## Run The Backend
@@ -61,6 +62,7 @@ GET    /students        List students, with optional q, sortBy, and order query 
 GET    /students/:id    Get one student
 POST   /students        Create a student
 PUT    /students/:id    Update a student
+PATCH  /students/:id    Partially update a student
 DELETE /students/:id    Delete a student
 ```
 
@@ -72,3 +74,62 @@ DELETE /students/:id    Delete a student
 - Delete student records.
 - Search and sort through the API.
 - Use Axios request and response interceptors for frontend API calls.
+
+## Extensions Attempted
+
+### Extension A - Pagination
+
+`GET /students` now accepts `page` and `size` query parameters. The API returns a wrapped response so the Vue UI can show the current page:
+
+```json
+{
+ "data": [],
+ "total": 5,
+ "page": 1,
+ "size": 5
+}
+```
+
+Working check: use `GET http://localhost:3000/students?page=2&size=5` from `test.http` or click the Prev / Next buttons in the UI.
+
+### Extension B - PATCH endpoint and active toggle
+
+The backend now supports `PATCH /students/:id` and only updates fields included in the request body. The table includes a one-click Activate / Deactivate button that sends a small payload:
+
+```json
+{
+ "active": false
+}
+```
+
+The UI flips the active state immediately and rolls it back if the API call fails.
+
+### Extension C - Server-side validation
+
+The backend validates matric number, name, course, faculty, email, GPA, year, active status, and duplicate email before writing to MySQL. Invalid requests return HTTP 400 with field-level errors:
+
+```json
+{
+ "errors": {
+ "matricNo": "Format: A21CS0001",
+ "gpa": "Must be 0-4"
+ }
+}
+```
+
+The Vue form copies those API errors into its inline error messages.
+
+### Extension E - Environment variables with dotenv
+
+Database credentials were moved out of `server/db.js` into environment variables loaded by `dotenv`. The committed file is `server/.env.example`; the real `server/.env` stays ignored by Git.
+
+## Code Review Against Chapter 8 Learning Outcomes
+
+| LO | Outcome | Review |
+| --- | --- | --- |
+| LO 1 | Connecting Vue to a Backend | Met. The Vue app calls the Express API through a centralized Axios client, and DB credentials now use the production-style dotenv pattern. |
+| LO 2 | Axios HTTP Client | Met. CRUD helpers are centralized in `src/api/studentApi.js`, and the new pagination and PATCH toggle both use Axios requests. |
+| LO 3 | Form Handling in Vue | Met. The form keeps client validation for UX and now displays trusted server-side 400 validation errors inline. |
+| LO 4 | Persistent CRUD | Met. Create, read, update, partial update, delete, pagination, and active toggling all persist through MySQL-backed endpoints. |
+
+Extension D was not attempted. The selected extensions focus on HTTP, validation, persistence, and configuration depth.

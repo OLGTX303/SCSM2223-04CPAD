@@ -1,6 +1,6 @@
 <script setup>
 defineProps({ students: { type: Array, required: true } })
-const emit = defineEmits(['edit', 'delete'])
+const emit = defineEmits(['edit', 'delete', 'toggle-active'])
 </script>
 <template>
  <div v-if="!students.length" class="empty">
@@ -29,6 +29,9 @@ const emit = defineEmits(['edit', 'delete'])
  </span>
  </td>
  <td>
+ <button @click="emit('toggle-active', s)">
+ {{ s.active ? 'Deactivate' : 'Activate' }}
+ </button>
  <button @click="emit('edit', s)">Edit</button>
  <button class="danger" @click="emit('delete', s.id)">Delete</button>
  </td>

@@ -1,6 +1,16 @@
+### Health check
+GET http://localhost:3000/
+
+### List first page
+GET http://localhost:3000/students?page=1&size=5
+
+### List second page
+GET http://localhost:3000/students?page=2&size=5
+
 ### Create
 POST http://localhost:3000/students
 Content-Type: application/json
+
 {
  "matricNo": "A21CS9999",
  "name": "Test Student",
@@ -11,12 +21,37 @@ Content-Type: application/json
  "year": 1,
  "active": true
 }
-### Update (replace <id> with the id returned above)
+
+### Validation error example
+POST http://localhost:3000/students
+Content-Type: application/json
+
+{
+ "matricNo": "bad",
+ "name": "T",
+ "course": "",
+ "faculty": "",
+ "gpa": 9,
+ "email": "not-an-email",
+ "year": 9,
+ "active": true
+}
+
+### Toggle active with PATCH
+PATCH http://localhost:3000/students/6
+Content-Type: application/json
+
+{
+ "active": false
+}
+
+### Update (replace 6 with the id returned above)
 PUT http://localhost:3000/students/6
 Content-Type: application/json
+
 {
  "matricNo": "A21CS9999",
- "name": "Test Student (updated)",
+ "name": "Test Student Updated",
  "course": "BSc CS",
  "faculty": "FSKSM",
  "gpa": 3.80,
@@ -24,5 +59,6 @@ Content-Type: application/json
  "year": 2,
  "active": true
 }
+
 ### Delete
 DELETE http://localhost:3000/students/6
