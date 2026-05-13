@@ -1,0 +1,35 @@
+body { font-family: system-ui, sans-serif; background: #f8fafc;
+ margin: 0; color: #0f172a; }
+header { background: #0f766e; color: white; padding: 1.2rem 2rem; }
+header h1 { margin: 0; font-size: 1.6rem; }
+header .subtitle { margin: 0.2rem 0 0; opacity: 0.85; font-size: 0.9rem; }
+main { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem;
+ display: grid; gap: 1.5rem; }
+.student-form, .student-table {
+ background: white; padding: 1rem 1.2rem;
+ border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.student-form label { display: block; margin: 0.5rem 0; font-size: 0.9rem; }
+.student-form input, .student-form select {
+ display: block; width: 100%; padding: 0.45rem 0.6rem; margin-top: 0.25rem;
+ border: 1px solid #cbd5e1; border-radius: 4px;
+}
+.student-form .err { color: #b91c1c; font-size: 0.78rem; }
+.student-form button { padding: 0.45rem 1rem; border: 0;
+ background: #0f766e; color: white; border-radius: 4px; cursor: pointer; }
+.student-form button.danger,
+.student-table .danger { background: #b91c1c; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { text-align: left; padding: 0.55rem 0.6rem;
+ border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+th { background: #f1f5f9; }
+code { background: #ccfbf1; color: #115e59;
+ padding: 0.15rem 0.4rem; border-radius: 4px; }
+.muted { font-size: 0.78rem; color: #64748b; }
+.badge { display: inline-block; padding: 0.15rem 0.5rem;
+ border-radius: 999px; font-size: 0.75rem; }
+ .badge.ok { background: #d1fae5; color: #065f46; }
+.badge.no { background: #fee2e2; color: #991b1b; }
+.error { background: #fee2e2; color: #991b1b; padding: 0.6rem 1rem;
+ border-radius: 6px; }
+.loading { color: #64748b; font-style: italic; }
