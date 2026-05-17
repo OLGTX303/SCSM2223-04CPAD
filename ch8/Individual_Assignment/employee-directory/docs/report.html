@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Employee Directory Report</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 14mm;
+      }
+
+      body {
+        color: #172033;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10.5pt;
+        line-height: 1.36;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 22pt;
+        margin: 0 0 4mm;
+      }
+
+      h2 {
+        border-bottom: 1px solid #d5dbe6;
+        font-size: 13pt;
+        margin: 7mm 0 2mm;
+        padding-bottom: 1mm;
+      }
+
+      p {
+        margin: 0 0 3mm;
+      }
+
+      ul {
+        margin: 0 0 3mm 5mm;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 1.5mm;
+      }
+
+      .meta {
+        color: #4d5b70;
+        margin-bottom: 5mm;
+      }
+
+      img {
+        border: 1px solid #d5dbe6;
+        display: block;
+        max-width: 100%;
+        margin-top: 2mm;
+      }
+
+      .caption {
+        color: #526177;
+        font-size: 9pt;
+        margin-top: 1mm;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Employee Directory Report</h1>
+    <p class="meta">Name: ZUO BOYU | Matric Number: A24CS4045</p>
+
+    <h2>Working UI Screenshot</h2>
+    <p>The application displays the add/edit form, search and sort controls, seeded employee records, active headcount, and active/inactive status badges.</p>
+    <img src="ui-screenshot.png" alt="Employee Directory UI screenshot" />
+    <p class="caption">Figure 1: Vue Employee Directory running at http://127.0.0.1:5174 with MySQL seed data.</p>
+
+    <h2>Chapter 8 Learning Outcomes</h2>
+    <ul>
+      <li><strong>LO1: Connect Vue to a backend.</strong> The Vue app calls the Express REST API on port 3001 and keeps the employee list in the parent component state.</li>
+      <li><strong>LO2: Use Axios.</strong> All HTTP requests go through one Axios instance in <code>src/services/api.js</code>, including a request logger and a response error mapper.</li>
+      <li><strong>LO3: Build validated Vue forms.</strong> <code>EmployeeForm.vue</code> uses <code>v-model.trim</code> and <code>v-model.number</code>, validates all required fields, and displays inline errors before any request is sent.</li>
+      <li><strong>LO4: Perform CRUD with MySQL.</strong> Express implements create, read, update, delete, server-side search, and whitelisted sorting with prepared statements through the mysql2 promise pool.</li>
+    </ul>
+
+    <h2>Implementation Notes</h2>
+    <p>The application is separated into form, list, and search/sort components. The SQL script creates the database, table, and seven sample records across HR, IT, Finance, Marketing, and Operations, with one inactive employee.</p>
+
+    <h2>Challenges and Resolutions</h2>
+    <ul>
+      <li><strong>Safe sorting:</strong> Directly accepting a column name from the client would risk SQL injection. The API maps requested sort keys to a fixed whitelist before building the <code>ORDER BY</code> clause.</li>
+      <li><strong>Consistent errors:</strong> Network and server errors can have different Axios shapes. The response interceptor converts them into one message format used by the UI banner.</li>
+      <li><strong>Responsive layout:</strong> The form and directory use CSS grid and a horizontally safe table layout so the page remains usable on laptop and tablet widths.</li>
+    </ul>
+  </body>
+</html>
