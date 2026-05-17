@@ -123,7 +123,7 @@ h2 {
 
 .workspace {
   display: grid;
-  grid-template-columns: minmax(400px, 460px) minmax(0, 1fr);
+  grid-template-columns: minmax(370px, 420px) minmax(0, 1fr);
   gap: 24px;
   align-items: start;
 }
@@ -240,6 +240,7 @@ select[aria-invalid="true"] {
 }
 
 .directory-panel {
+  min-width: 0;
   overflow: hidden;
 }
 
@@ -276,7 +277,7 @@ select[aria-invalid="true"] {
 
 table {
   width: 100%;
-  min-width: 760px;
+  min-width: 700px;
   border-collapse: collapse;
 }
 
