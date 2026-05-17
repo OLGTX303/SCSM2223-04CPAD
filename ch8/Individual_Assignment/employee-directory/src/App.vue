@@ -111,90 +111,63 @@ function clearSelection() {
 
 <template>
   <div class="app-layout">
-    <aside class="sidebar" aria-label="Admin navigation">
-      <div class="brand-block">
-        <div class="brand-icon">HR</div>
-        <div>
-          <strong>Admin Console</strong>
-          <span>HR Department</span>
-        </div>
-      </div>
-
-      <nav class="side-nav">
-        <a href="#">Overview</a>
-        <a class="active" href="#">Employees</a>
-        <a href="#">Org Chart</a>
-        <a href="#">Settings</a>
+    <header class="topbar">
+      <strong>HR Portal</strong>
+      <nav>
+        <a class="active" href="#">Directory</a>
       </nav>
+    </header>
 
-      <div class="help-card">
-        <strong>Help Center</strong>
-        <span>Assignment support</span>
-      </div>
-    </aside>
+    <main class="app-shell">
+      <section class="page-header">
+        <div>
+          <p class="eyebrow">Human Resources</p>
+          <h1>Employee Directory</h1>
+          <p class="subtitle">Manage staff records with Vue, Axios, Express and MySQL.</p>
+        </div>
+      </section>
 
-    <div class="main-area">
-      <header class="topbar">
-        <strong>HR Portal</strong>
-        <nav>
-          <a href="#">Dashboard</a>
-          <a class="active" href="#">Directory</a>
-          <a href="#">Analytics</a>
-          <a href="#">Reports</a>
-        </nav>
-      </header>
+      <section class="stats" aria-label="Employee summary">
+        <div class="stat-card total">
+          <span class="stat-icon">T</span>
+          <p>Total Employees</p>
+          <strong>{{ pagination.total }}</strong>
+        </div>
+        <div class="stat-card active">
+          <span class="stat-icon">A</span>
+          <p>Active Employees</p>
+          <strong>{{ pagination.activeTotal }}</strong>
+        </div>
+        <div class="stat-card inactive">
+          <span class="stat-icon">I</span>
+          <p>Inactive Employees</p>
+          <strong>{{ pagination.inactiveTotal }}</strong>
+        </div>
+      </section>
 
-      <main class="app-shell">
-        <section class="page-header">
-          <div>
-            <p class="eyebrow">Human Resources</p>
-            <h1>Employee Directory</h1>
-            <p class="subtitle">Manage staff records with Vue, Axios, Express and MySQL.</p>
-          </div>
-        </section>
+      <div v-if="errorMessage" class="banner" role="alert">{{ errorMessage }}</div>
 
-        <section class="stats" aria-label="Employee summary">
-          <div class="stat-card total">
-            <span class="stat-icon">T</span>
-            <p>Total Employees</p>
-            <strong>{{ pagination.total }}</strong>
-          </div>
-          <div class="stat-card active">
-            <span class="stat-icon">A</span>
-            <p>Active Employees</p>
-            <strong>{{ pagination.activeTotal }}</strong>
-          </div>
-          <div class="stat-card inactive">
-            <span class="stat-icon">I</span>
-            <p>Inactive Employees</p>
-            <strong>{{ pagination.inactiveTotal }}</strong>
-          </div>
-        </section>
+      <section class="workspace">
+        <EmployeeForm
+          :editing-employee="selectedEmployee"
+          :saving="saving"
+          :reset-token="resetToken"
+          @save="handleSave"
+          @cancel="clearSelection"
+        />
 
-        <div v-if="errorMessage" class="banner" role="alert">{{ errorMessage }}</div>
-
-        <section class="workspace">
-          <EmployeeForm
-            :editing-employee="selectedEmployee"
-            :saving="saving"
-            :reset-token="resetToken"
-            @save="handleSave"
-            @cancel="clearSelection"
+        <section class="directory-panel">
+          <SearchSortControls :filters="filters" @change="handleFilterChange" />
+          <EmployeeList
+            :employees="employees"
+            :loading="loading"
+            :pagination="pagination"
+            @edit="handleEdit"
+            @delete="handleDelete"
+            @page-change="handlePageChange"
           />
-
-          <section class="directory-panel">
-            <SearchSortControls :filters="filters" @change="handleFilterChange" />
-            <EmployeeList
-              :employees="employees"
-              :loading="loading"
-              :pagination="pagination"
-              @edit="handleEdit"
-              @delete="handleDelete"
-              @page-change="handlePageChange"
-            />
-          </section>
         </section>
-      </main>
-    </div>
+      </section>
+    </main>
   </div>
 </template>
