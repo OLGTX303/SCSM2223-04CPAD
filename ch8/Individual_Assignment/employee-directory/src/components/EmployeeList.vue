@@ -24,6 +24,16 @@ const moneyFormatter = new Intl.NumberFormat('ms-MY', {
 function formatSalary(value) {
   return moneyFormatter.format(Number(value))
 }
+
+function initials(name) {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase()
+}
 </script>
 
 <template>
@@ -65,8 +75,7 @@ function formatSalary(value) {
           <thead>
             <tr>
               <th>Employee</th>
-              <th>Department</th>
-              <th>Position</th>
+              <th>Dept & Position</th>
               <th>Hire Date</th>
               <th>Salary</th>
               <th>Status</th>
@@ -76,13 +85,20 @@ function formatSalary(value) {
           <tbody>
             <tr v-for="employee in employees" :key="employee.id">
               <td>
-                <strong>{{ employee.name }}</strong>
-                <span>{{ employee.empId }} - {{ employee.email }}</span>
+                <div class="employee-cell">
+                  <span class="avatar">{{ initials(employee.name) }}</span>
+                  <div>
+                    <strong>{{ employee.name }}</strong>
+                    <span>{{ employee.empId }} - {{ employee.email }}</span>
+                  </div>
+                </div>
               </td>
-              <td>{{ employee.department }}</td>
-              <td>{{ employee.position }}</td>
+              <td>
+                <strong class="dept-name">{{ employee.department }}</strong>
+                <span>{{ employee.position }}</span>
+              </td>
               <td>{{ employee.hireDate }}</td>
-              <td>{{ formatSalary(employee.salary) }}</td>
+              <td class="salary-cell">{{ formatSalary(employee.salary) }}</td>
               <td>
                 <span class="badge" :class="employee.active ? 'active' : 'inactive'">
                   {{ employee.active ? 'Active' : 'Inactive' }}
