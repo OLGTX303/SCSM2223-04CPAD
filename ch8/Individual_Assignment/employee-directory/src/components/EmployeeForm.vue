@@ -148,7 +148,7 @@ function toForm(employee) {
       <span v-if="errors.email" class="field-error">{{ errors.email }}</span>
     </label>
 
-    <div class="form-row">
+    <div class="form-row form-row-stacked">
       <label>
         Department
         <select v-model="form.department" :aria-invalid="Boolean(errors.department)">
@@ -165,7 +165,7 @@ function toForm(employee) {
       </label>
     </div>
 
-    <div class="form-row">
+    <div class="form-row form-row-compact">
       <label>
         Hire Date
         <input v-model="form.hireDate" type="date" :aria-invalid="Boolean(errors.hireDate)" />

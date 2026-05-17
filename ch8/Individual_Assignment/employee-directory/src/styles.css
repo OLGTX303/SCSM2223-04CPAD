@@ -36,9 +36,9 @@ button:disabled {
 }
 
 .app-shell {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1240px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 32px 0;
+  padding: 36px 0;
 }
 
 .page-header {
@@ -123,8 +123,8 @@ h2 {
 
 .workspace {
   display: grid;
-  grid-template-columns: minmax(290px, 360px) 1fr;
-  gap: 20px;
+  grid-template-columns: minmax(400px, 460px) minmax(0, 1fr);
+  gap: 24px;
   align-items: start;
 }
 
@@ -138,8 +138,8 @@ h2 {
 
 .employee-form {
   display: grid;
-  gap: 14px;
-  padding: 20px;
+  gap: 18px;
+  padding: 26px;
   position: sticky;
   top: 18px;
 }
@@ -154,22 +154,22 @@ h2 {
 
 label {
   display: grid;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
   color: #38445a;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 800;
 }
 
 input,
 select {
   width: 100%;
-  min-height: 42px;
+  min-height: 48px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
   background: #ffffff;
   color: #111827;
-  padding: 9px 10px;
+  padding: 10px 12px;
   outline: none;
 }
 
@@ -186,8 +186,13 @@ select[aria-invalid="true"] {
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.form-row-compact {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
 }
 
 .field-error {
@@ -210,10 +215,10 @@ select[aria-invalid="true"] {
 .primary-btn,
 .ghost-btn,
 .danger-btn {
-  min-height: 38px;
+  min-height: 42px;
   border-radius: 6px;
   border: 1px solid transparent;
-  padding: 8px 12px;
+  padding: 10px 14px;
   font-weight: 800;
 }
 
@@ -348,9 +353,23 @@ td span {
   }
 }
 
+@media (max-width: 1120px) {
+  .workspace {
+    grid-template-columns: minmax(340px, 390px) minmax(0, 1fr);
+  }
+
+  .employee-form {
+    padding: 22px;
+  }
+
+  .form-row-compact {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 720px) {
   .app-shell {
-    width: min(100% - 20px, 1180px);
+    width: min(100% - 20px, 1240px);
     padding: 20px 0;
   }
 
