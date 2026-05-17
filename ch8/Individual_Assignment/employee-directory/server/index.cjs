@@ -29,20 +29,44 @@ app.get('/employees', async (req, res) => {
     const sortBy = String(req.query.sortBy || 'name')
     const order = String(req.query.order || 'asc').toLowerCase() === 'desc' ? 'DESC' : 'ASC'
     const sortColumn = allowedSortColumns[sortBy] || 'name'
+    const page = Math.max(Number.parseInt(req.query.page || '1', 10), 1)
+    const pageSize = Math.min(Math.max(Number.parseInt(req.query.pageSize || '7', 10), 1), 25)
+    const offset = (page - 1) * pageSize
 
-    let sql = 'SELECT id, empId, name, email, department, position, hireDate, salary, active FROM employees'
+    let whereSql = ''
     const params = []
 
     if (q) {
-      sql += ' WHERE name LIKE ? OR empId LIKE ? OR email LIKE ? OR department LIKE ?'
+      whereSql = ' WHERE name LIKE ? OR empId LIKE ? OR email LIKE ? OR department LIKE ?'
       const like = `%${q}%`
       params.push(like, like, like, like)
     }
 
+    let sql = 'SELECT id, empId, name, email, department, position, hireDate, salary, active FROM employees'
+    sql += whereSql
     sql += ` ORDER BY ${sortColumn} ${order}, id ASC`
+    sql += ` LIMIT ${pageSize} OFFSET ${offset}`
 
+    const [countRows] = await pool.execute(
+      `SELECT
+        COUNT(*) AS total,
+        SUM(CASE WHEN active = TRUE THEN 1 ELSE 0 END) AS activeTotal
+       FROM employees${whereSql}`,
+      params
+    )
     const [rows] = await pool.execute(sql, params)
-    res.json(rows.map(normalizeEmployee))
+    const total = Number(countRows[0].total)
+    const activeTotal = Number(countRows[0].activeTotal || 0)
+
+    res.json({
+      data: rows.map(normalizeEmployee),
+      total,
+      activeTotal,
+      inactiveTotal: total - activeTotal,
+      page,
+      pageSize,
+      totalPages: Math.max(Math.ceil(total / pageSize), 1)
+    })
   } catch (error) {
     handleError(res, error)
   }

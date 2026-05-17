@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import EmployeeForm from './components/EmployeeForm.vue'
 import EmployeeList from './components/EmployeeList.vue'
 import SearchSortControls from './components/SearchSortControls.vue'
@@ -11,14 +11,19 @@ const loading = ref(false)
 const saving = ref(false)
 const errorMessage = ref('')
 const resetToken = ref(0)
+const pagination = ref({
+  page: 1,
+  pageSize: 7,
+  total: 0,
+  activeTotal: 0,
+  inactiveTotal: 0,
+  totalPages: 1
+})
 const filters = ref({
   q: '',
   sortBy: 'name',
   order: 'asc'
 })
-
-const activeCount = computed(() => employees.value.filter((employee) => employee.active).length)
-const inactiveCount = computed(() => employees.value.length - activeCount.value)
 
 onMounted(loadEmployees)
 
@@ -26,7 +31,20 @@ async function loadEmployees() {
   loading.value = true
   errorMessage.value = ''
   try {
-    employees.value = await fetchEmployees(filters.value)
+    const result = await fetchEmployees({
+      ...filters.value,
+      page: pagination.value.page,
+      pageSize: pagination.value.pageSize
+    })
+    employees.value = result.data
+    pagination.value = {
+      page: result.page,
+      pageSize: result.pageSize,
+      total: result.total,
+      activeTotal: result.activeTotal,
+      inactiveTotal: result.inactiveTotal,
+      totalPages: result.totalPages
+    }
   } catch (error) {
     errorMessage.value = error.message
   } finally {
@@ -36,6 +54,12 @@ async function loadEmployees() {
 
 async function handleFilterChange(nextFilters) {
   filters.value = nextFilters
+  pagination.value.page = 1
+  await loadEmployees()
+}
+
+async function handlePageChange(nextPage) {
+  pagination.value.page = nextPage
   await loadEmployees()
 }
 
@@ -96,15 +120,15 @@ function clearSelection() {
 
       <div class="stats" aria-label="Employee summary">
         <div>
-          <span>{{ employees.length }}</span>
+          <span>{{ pagination.total }}</span>
           <small>Total</small>
         </div>
         <div>
-          <span>{{ activeCount }}</span>
+          <span>{{ pagination.activeTotal }}</span>
           <small>Active</small>
         </div>
         <div>
-          <span>{{ inactiveCount }}</span>
+          <span>{{ pagination.inactiveTotal }}</span>
           <small>Inactive</small>
         </div>
       </div>
@@ -126,8 +150,10 @@ function clearSelection() {
         <EmployeeList
           :employees="employees"
           :loading="loading"
+          :pagination="pagination"
           @edit="handleEdit"
           @delete="handleDelete"
+          @page-change="handlePageChange"
         />
       </section>
     </section>

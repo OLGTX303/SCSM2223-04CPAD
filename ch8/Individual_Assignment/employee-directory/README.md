@@ -74,6 +74,7 @@ Create a `.env` file in the project root if your MySQL credentials differ. Use `
 - Full CRUD for employee records through `/employees`.
 - Server-side search using SQL `LIKE` on name, employee ID, email, and department.
 - Server-side sorting with whitelisted columns: `name`, `hireDate`, `salary`, and `department`.
+- Server-side pagination with page switching in the employee table.
 - Prepared statements for all database values.
 - Vue form validation for employee ID, name, email, department, position, hire date, salary, and active status.
 - Loading state, error banner, active/inactive badges, responsive layout, and Malaysian Ringgit salary formatting.
@@ -83,6 +84,7 @@ Create a `.env` file in the project root if your MySQL credentials differ. Use `
 - `GET /employees`
 - `GET /employees?q=it`
 - `GET /employees?sortBy=salary&order=desc`
+- `GET /employees?page=2&pageSize=7`
 - `GET /employees/:id`
 - `POST /employees`
 - `PUT /employees/:id`

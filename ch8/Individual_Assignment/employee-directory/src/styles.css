@@ -339,6 +339,39 @@ td span {
   flex-wrap: wrap;
 }
 
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.pagination-bar-top {
+  border-top: 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pagination-bar p {
+  margin: 0;
+  color: #334155;
+  font-weight: 800;
+}
+
+.pagination-bar span {
+  margin-left: 8px;
+  color: #64748b;
+  font-size: 0.84rem;
+}
+
+.pagination-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 980px) {
   .page-header,
   .workspace {
@@ -381,6 +414,11 @@ td span {
   .stats,
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  .pagination-bar {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .stats div {
