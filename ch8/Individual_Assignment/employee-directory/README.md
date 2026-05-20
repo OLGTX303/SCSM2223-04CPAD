@@ -100,9 +100,6 @@ Do not commit `node_modules/`, `dist/`, logs, generated report files, or tempora
 
 Official documentation consulted during implementation. All code was written by me; AI assistants were used only for explanations and debugging.
 
-- Vue 3 - Composition API and `<script setup>` - https://vuejs.org/guide/
-- Vite configuration - https://vitejs.dev/config/
-- Axios - instance configuration and interceptors - https://axios-http.com/docs/interceptors
-- Express 5 routing and middleware - https://expressjs.com/en/5x/api.html
-- mysql2 promise pool and prepared statements - https://github.com/sidorares/node-mysql2#using-prepared-statements
-- MDN - `Intl.NumberFormat` for MYR formatting - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
+- Vue 3 - Composition API: https://vuejs.org/guide/introduction.html
+- Vite configuration: https://vitejs.dev/config/
+- Axios - instance configuration: https://axios.rest/pages/advanced/interceptors
