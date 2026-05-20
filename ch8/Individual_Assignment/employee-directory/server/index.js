@@ -45,7 +45,7 @@ app.get('/employees', async (req, res) => {
     let sql = 'SELECT id, empId, name, email, department, position, hireDate, salary, active FROM employees'
     sql += whereSql
     sql += ` ORDER BY ${sortColumn} ${order}, id ASC`
-    sql += ' LIMIT ? OFFSET ?'
+    sql += ` LIMIT ${pageSize} OFFSET ${offset}`
 
     const [countRows] = await pool.execute(
       `SELECT
@@ -54,7 +54,7 @@ app.get('/employees', async (req, res) => {
        FROM employees${whereSql}`,
       params
     )
-    const [rows] = await pool.execute(sql, [...params, pageSize, offset])
+    const [rows] = await pool.execute(sql, params)
     const total = Number(countRows[0].total)
     const activeTotal = Number(countRows[0].activeTotal || 0)
 
