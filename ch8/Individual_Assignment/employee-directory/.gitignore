@@ -3,3 +3,8 @@ dist/
 .env
 *.log
 .codegraph/
+docs/
+*.docx
+~$*.docx
+report.pdf
+REPORT.md
