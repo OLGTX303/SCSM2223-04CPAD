@@ -75,7 +75,7 @@ Create a `.env` file in the project root if your MySQL credentials differ. Use `
 - Server-side search using SQL `LIKE` on name, employee ID, email, and department.
 - Server-side sorting with whitelisted columns: `name`, `hireDate`, `salary`, and `department`.
 - Server-side pagination with page switching in the employee table.
-- Prepared statements for all database values.
+- Prepared statements for database values.
 - Vue form validation for employee ID, name, email, department, position, hire date, salary, and active status.
 - Loading state, error banner, active/inactive badges, responsive layout, and Malaysian Ringgit salary formatting.
 
@@ -94,16 +94,15 @@ Create a `.env` file in the project root if your MySQL credentials differ. Use `
 
 The parent `App.vue` component owns the employee array and request state. Child components receive data through props and communicate actions through emits. Axios logic is kept in `src/services/api.js` so components do not contain inline Axios calls.
 
-Do not include `node_modules/` or `dist/` in the final ZIP archive.
+Do not commit `node_modules/`, `dist/`, logs, generated report files, or temporary Word lock files.
 
 ## Sources and References
 
 Official documentation consulted during implementation. All code was written by me; AI assistants were used only for explanations and debugging.
 
-- Vue 3 — Composition API and `<script setup>` — https://vuejs.org/guide/
-- Vite configuration — https://vitejs.dev/config/
-- Axios — instance configuration and interceptors — https://axios-http.com/docs/interceptors
-- Express 5 routing and middleware — https://expressjs.com/en/5x/api.html
-- mysql2 promise pool and prepared statements — https://github.com/sidorares/node-mysql2#using-prepared-statements
-- MDN — `Intl.NumberFormat` for MYR formatting — https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
-
+- Vue 3 - Composition API and `<script setup>` - https://vuejs.org/guide/
+- Vite configuration - https://vitejs.dev/config/
+- Axios - instance configuration and interceptors - https://axios-http.com/docs/interceptors
+- Express 5 routing and middleware - https://expressjs.com/en/5x/api.html
+- mysql2 promise pool and prepared statements - https://github.com/sidorares/node-mysql2#using-prepared-statements
+- MDN - `Intl.NumberFormat` for MYR formatting - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
