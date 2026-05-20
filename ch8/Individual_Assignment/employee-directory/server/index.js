@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
-const pool = require('./db.cjs')
+const pool = require('./db')
 
 const app = express()
 const port = Number(process.env.PORT || 3001)
@@ -45,7 +45,7 @@ app.get('/employees', async (req, res) => {
     let sql = 'SELECT id, empId, name, email, department, position, hireDate, salary, active FROM employees'
     sql += whereSql
     sql += ` ORDER BY ${sortColumn} ${order}, id ASC`
-    sql += ` LIMIT ${pageSize} OFFSET ${offset}`
+    sql += ' LIMIT ? OFFSET ?'
 
     const [countRows] = await pool.execute(
       `SELECT
@@ -54,7 +54,7 @@ app.get('/employees', async (req, res) => {
        FROM employees${whereSql}`,
       params
     )
-    const [rows] = await pool.execute(sql, params)
+    const [rows] = await pool.execute(sql, [...params, pageSize, offset])
     const total = Number(countRows[0].total)
     const activeTotal = Number(countRows[0].activeTotal || 0)
 

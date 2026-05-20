@@ -95,3 +95,15 @@ Create a `.env` file in the project root if your MySQL credentials differ. Use `
 The parent `App.vue` component owns the employee array and request state. Child components receive data through props and communicate actions through emits. Axios logic is kept in `src/services/api.js` so components do not contain inline Axios calls.
 
 Do not include `node_modules/` or `dist/` in the final ZIP archive.
+
+## Sources and References
+
+Official documentation consulted during implementation. All code was written by me; AI assistants were used only for explanations and debugging.
+
+- Vue 3 — Composition API and `<script setup>` — https://vuejs.org/guide/
+- Vite configuration — https://vitejs.dev/config/
+- Axios — instance configuration and interceptors — https://axios-http.com/docs/interceptors
+- Express 5 routing and middleware — https://expressjs.com/en/5x/api.html
+- mysql2 promise pool and prepared statements — https://github.com/sidorares/node-mysql2#using-prepared-statements
+- MDN — `Intl.NumberFormat` for MYR formatting — https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
+
