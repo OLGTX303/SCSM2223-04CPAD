@@ -45,31 +45,6 @@ function initials(name) {
     </div>
 
     <div v-else>
-      <div class="pagination-bar pagination-bar-top">
-        <p>
-          Page {{ pagination.page }} of {{ pagination.totalPages }}
-          <span>{{ pagination.total }} records</span>
-        </p>
-        <div class="pagination-actions">
-          <button
-            class="ghost-btn"
-            type="button"
-            :disabled="pagination.page <= 1"
-            @click="$emit('page-change', pagination.page - 1)"
-          >
-            Previous
-          </button>
-          <button
-            class="ghost-btn"
-            type="button"
-            :disabled="pagination.page >= pagination.totalPages"
-            @click="$emit('page-change', pagination.page + 1)"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-
       <div class="table-wrap">
         <table>
           <thead>
