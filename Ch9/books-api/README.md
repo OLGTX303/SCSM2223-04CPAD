@@ -23,6 +23,12 @@ From this folder:
 php -S localhost:8000 -t public
 ```
 
+Or start both the API and Vue frontend automatically:
+
+```powershell
+.\start-ch9.ps1
+```
+
 The Postman collection and Vue frontend use:
 
 - `base_url`: `http://localhost:8000`
@@ -127,3 +133,5 @@ npm run dev
 ```
 
 Open the Vite URL, usually `http://localhost:5173/`. The frontend expects the API to run at `http://localhost:8000`.
+
+You can also run `.\start-ch9.ps1` from this folder to install missing dependencies, start both servers, and open the frontend.

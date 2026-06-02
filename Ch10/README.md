@@ -48,6 +48,18 @@ Start the API:
 php -S localhost:8000 -t public
 ```
 
+Or start the API and Vue frontend automatically:
+
+```powershell
+.\start-ch10.ps1
+```
+
+To reset and reseed the MySQL database before starting:
+
+```powershell
+.\start-ch10.ps1 -ResetDatabase
+```
+
 ## API Endpoints
 
 | Method | URL | Description |
@@ -82,3 +94,5 @@ npm run dev
 ```
 
 Open the Vite URL, usually `http://localhost:5173/`. The frontend expects the API at `http://localhost:8000`.
+
+You can also run `.\start-ch10.ps1` from this folder to create `.env`, install missing dependencies, prepare the database if needed, start both servers, and open the frontend.
