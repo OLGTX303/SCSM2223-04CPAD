@@ -2,7 +2,6 @@
 
 use App\Controllers\BookController;
 use App\Controllers\HealthController;
-use App\Middleware\AuthMiddleware;
 use Slim\App;
 
 return function (App $app): void {
@@ -14,5 +13,6 @@ return function (App $app): void {
         $group->post('/books', [BookController::class, 'create']);
         $group->put('/books/{id}', [BookController::class, 'update']);
         $group->delete('/books/{id}', [BookController::class, 'delete']);
-    })->add(new AuthMiddleware());
+        $group->post('/reset', [BookController::class, 'reset']);
+    });
 };

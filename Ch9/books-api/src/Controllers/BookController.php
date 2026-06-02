@@ -7,25 +7,15 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 final class BookController
 {
-    private static array $books = [];
-
-    private static function bootstrap(): void
-    {
-        if (self::$books === []) {
-            self::$books = require __DIR__ . '/../Data/books.php';
-        }
-    }
-
     /** GET /api/books - supports ?q= and ?limit= */
     public function index(Request $req, Response $res): Response
     {
-        self::bootstrap();
         $params = $req->getQueryParams();
-        $items = self::$books;
+        $items = $this->load();
 
         if (!empty($params['q'])) {
             $q = mb_strtolower((string) $params['q']);
-            $items = array_values(array_filter($items, fn($b) =>
+            $items = array_values(array_filter($items, fn ($b) =>
                 str_contains(mb_strtolower($b['title']), $q) ||
                 str_contains(mb_strtolower($b['author']), $q)
             ));
@@ -41,9 +31,9 @@ final class BookController
     /** GET /api/books/{id} */
     public function show(Request $req, Response $res, array $args): Response
     {
-        self::bootstrap();
+        $books = $this->load();
         $id = (int) ($args['id'] ?? 0);
-        $book = $this->findById($id);
+        $book = $this->findById($books, $id);
 
         return $book
             ? $this->json($res, $book)
@@ -53,7 +43,7 @@ final class BookController
     /** POST /api/books */
     public function create(Request $req, Response $res): Response
     {
-        self::bootstrap();
+        $books = $this->load();
         $body = (array) ($req->getParsedBody() ?? []);
         $errors = $this->validate($body, requireAll: true);
 
@@ -61,7 +51,7 @@ final class BookController
             return $this->json($res, ['errors' => $errors], 400);
         }
 
-        $id = (max(array_column(self::$books, 'id') ?: [0])) + 1;
+        $id = (max(array_column($books, 'id') ?: [0])) + 1;
         $book = [
             'id' => $id,
             'title' => trim($body['title']),
@@ -70,7 +60,8 @@ final class BookController
             'genre' => trim((string) ($body['genre'] ?? 'Uncategorised')),
         ];
 
-        self::$books[] = $book;
+        $books[] = $book;
+        $this->save($books);
 
         return $this->json($res, ['message' => 'Book created', 'data' => $book], 201)
             ->withHeader('Location', '/api/books/' . $id);
@@ -79,9 +70,9 @@ final class BookController
     /** PUT /api/books/{id} - full or partial update */
     public function update(Request $req, Response $res, array $args): Response
     {
-        self::bootstrap();
+        $books = $this->load();
         $id = (int) ($args['id'] ?? 0);
-        $idx = $this->findIndexById($id);
+        $idx = $this->findIndexById($books, $id);
 
         if ($idx === null) {
             return $this->json($res, ['error' => "Book {$id} not found"], 404);
@@ -94,7 +85,7 @@ final class BookController
             return $this->json($res, ['errors' => $errors], 400);
         }
 
-        $current = self::$books[$idx];
+        $current = $books[$idx];
         foreach (['title', 'author', 'genre'] as $key) {
             if (array_key_exists($key, $body)) {
                 $current[$key] = trim((string) $body[$key]);
@@ -105,7 +96,8 @@ final class BookController
             $current['year'] = (int) $body['year'];
         }
 
-        self::$books[$idx] = $current;
+        $books[$idx] = $current;
+        $this->save($books);
 
         return $this->json($res, ['message' => 'Book updated', 'data' => $current]);
     }
@@ -113,23 +105,77 @@ final class BookController
     /** DELETE /api/books/{id} */
     public function delete(Request $req, Response $res, array $args): Response
     {
-        self::bootstrap();
+        $books = $this->load();
         $id = (int) ($args['id'] ?? 0);
-        $idx = $this->findIndexById($id);
+        $idx = $this->findIndexById($books, $id);
 
         if ($idx === null) {
             return $this->json($res, ['error' => "Book {$id} not found"], 404);
         }
 
-        $deleted = self::$books[$idx];
-        array_splice(self::$books, $idx, 1);
+        $deleted = $books[$idx];
+        array_splice($books, $idx, 1);
+        $this->save($books);
 
         return $this->json($res, ['message' => 'Book deleted', 'data' => $deleted]);
     }
 
-    private function findById(int $id): ?array
+    /** POST /api/reset */
+    public function reset(Request $req, Response $res): Response
     {
-        foreach (self::$books as $book) {
+        $books = $this->seedBooks();
+        $this->save($books);
+
+        return $this->json($res, [
+            'message' => 'Seed data restored',
+            'count' => count($books),
+            'data' => $books,
+        ]);
+    }
+
+    private function load(): array
+    {
+        $file = $this->storeFile();
+
+        if (!is_file($file)) {
+            $this->save($this->seedBooks());
+        }
+
+        $json = file_get_contents($file);
+        $books = json_decode($json ?: '[]', true);
+
+        return is_array($books) ? $books : [];
+    }
+
+    private function save(array $books): void
+    {
+        $file = $this->storeFile();
+        $dir = dirname($file);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        file_put_contents(
+            $file,
+            json_encode(array_values($books), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+            LOCK_EX
+        );
+    }
+
+    private function storeFile(): string
+    {
+        return dirname(__DIR__, 2) . '/var/books.json';
+    }
+
+    private function seedBooks(): array
+    {
+        return require __DIR__ . '/../Data/books.php';
+    }
+
+    private function findById(array $books, int $id): ?array
+    {
+        foreach ($books as $book) {
             if ($book['id'] === $id) {
                 return $book;
             }
@@ -138,9 +184,9 @@ final class BookController
         return null;
     }
 
-    private function findIndexById(int $id): ?int
+    private function findIndexById(array $books, int $id): ?int
     {
-        foreach (self::$books as $index => $book) {
+        foreach ($books as $index => $book) {
             if ($book['id'] === $id) {
                 return $index;
             }
