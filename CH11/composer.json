@@ -1,0 +1,13 @@
+{
+  "name": "utm/ch11-books-api-jwt",
+  "require": {
+    "firebase/php-jwt": "^7.0",
+    "slim/slim": "4.*",
+    "slim/psr7": "^1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}
