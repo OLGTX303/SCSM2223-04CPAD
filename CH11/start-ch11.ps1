@@ -26,15 +26,33 @@ function Start-Terminal {
         [string] $Command
     )
 
-    $escapedTitle = $Title.Replace('"', '\"')
+    $escapedTitle = $Title.Replace("'", "''")
     $escapedDir = $WorkingDirectory.Replace("'", "''")
-    $fullCommand = "title `"$escapedTitle`"; Set-Location '$escapedDir'; $Command"
+    $fullCommand = "`$Host.UI.RawUI.WindowTitle = '$escapedTitle'; Set-Location -LiteralPath '$escapedDir'; $Command"
 
     Start-Process powershell.exe -ArgumentList @(
         '-NoExit',
         '-ExecutionPolicy', 'Bypass',
         '-Command', $fullCommand
     )
+}
+
+function Test-ComposerVendorReady {
+    $requiredFiles = @(
+        'vendor\autoload.php',
+        'vendor\firebase\php-jwt\src\JWT.php',
+        'vendor\nikic\fast-route\src\functions.php',
+        'vendor\slim\slim\Slim\App.php',
+        'vendor\slim\psr7\src\Response.php'
+    )
+
+    foreach ($file in $requiredFiles) {
+        if (!(Test-Path (Join-Path $Root $file))) {
+            return $false
+        }
+    }
+
+    return $true
 }
 
 function Test-DatabaseExists {
@@ -80,7 +98,7 @@ if ($ResetDatabase -or !(Test-DatabaseExists)) {
 }
 
 if (!$SkipInstall) {
-    if (!(Test-Path (Join-Path $Root 'vendor'))) {
+    if (!(Test-ComposerVendorReady)) {
         if (!(Test-Path $ComposerPhar)) {
             throw "Composer was not found at $ComposerPhar. Update `$ComposerPhar in this script."
         }
