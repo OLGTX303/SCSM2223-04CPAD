@@ -45,6 +45,34 @@ label { display: block; margin: 12px 0 6px; font-size: 13px; color: var(--muted)
 .book .meta { color: var(--muted); font-size: 13px; }
 .book .actions { display: flex; gap: 6px; }
 
+.list-summary {
+  color: var(--muted);
+  display: flex;
+  font-size: 13px;
+  gap: 12px;
+  justify-content: space-between;
+  margin: 0 0 12px;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.pagination button {
+  min-width: 38px;
+}
+
+.pagination button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 700;
+}
+
 .note { background: #D1FAE5; border-left: 4px solid var(--success); padding: 10px 14px; font-size: 13px; color: #065F46; border-radius: 4px; margin-bottom: 16px; }
 .alert.error { background: #FEE2E2; color: var(--danger); padding: 10px 14px; border-radius: 4px; margin-bottom: 12px; }
 .alert.ok    { background: #D1FAE5; color: #065F46;    padding: 10px 14px; border-radius: 4px; margin-bottom: 12px; }
@@ -54,4 +82,5 @@ label { display: block; margin: 12px 0 6px; font-size: 13px; color: var(--muted)
 @media (max-width: 600px) {
   main { padding: 16px; }
   .book { grid-template-columns: 1fr; }
+  .list-summary { flex-direction: column; }
 }

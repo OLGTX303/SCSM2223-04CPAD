@@ -1,0 +1,68 @@
+### Books REST API - Chapter 10 (MySQL/PDO)
+### Use VS Code "REST Client" or import into Postman.
+
+@host = http://localhost:8000
+
+# ---------------------------------------------------------------
+# 1. Public API
+# ---------------------------------------------------------------
+
+### Health
+GET {{host}}/
+
+### List books
+GET {{host}}/api/books
+
+### List books with pagination
+GET {{host}}/api/books?limit=25&page=2
+
+### Search books by title or author
+GET {{host}}/api/books?q=clean
+
+### Search with pagination
+GET {{host}}/api/books?q=java&limit=10&page=1
+
+### Show one book
+GET {{host}}/api/books/1
+
+# ---------------------------------------------------------------
+# 2. CRUD
+# ---------------------------------------------------------------
+
+### Create a book
+POST {{host}}/api/books
+Content-Type: application/json
+
+{
+  "title":  "Refactoring",
+  "author": "Martin Fowler",
+  "year":   2018,
+  "genre":  "Software Engineering"
+}
+
+### Update a book
+PUT {{host}}/api/books/1
+Content-Type: application/json
+
+{
+  "year":  2009,
+  "genre": "Software Craftsmanship"
+}
+
+### Delete a book
+DELETE {{host}}/api/books/2
+
+# ---------------------------------------------------------------
+# 3. Negative cases
+# ---------------------------------------------------------------
+
+### Book not found
+GET {{host}}/api/books/999999
+
+### Validation error - missing author and year
+POST {{host}}/api/books
+Content-Type: application/json
+
+{
+  "title": "Should fail"
+}

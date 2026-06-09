@@ -9,41 +9,57 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 final class BookController
 {
-    /** GET /api/books - supports ?q= and ?limit= */
+    /** GET /api/books - supports ?q=, ?limit=, and ?page= */
     public function index(Request $req, Response $res): Response
     {
         $params = $req->getQueryParams();
         $q = trim((string) ($params['q'] ?? ''));
-        $limit = max(0, (int) ($params['limit'] ?? 0));
+        $limit = max(1, min(100, (int) ($params['limit'] ?? 25)));
+        $page = max(1, (int) ($params['page'] ?? 1));
+        $offset = ($page - 1) * $limit;
 
-        $sql = 'SELECT id, title, author, year, genre, created_at, updated_at FROM books';
+        $whereSql = '';
         $args = [];
 
         if ($q !== '') {
-            $sql .= ' WHERE title LIKE :q_title OR author LIKE :q_author';
+            $whereSql = ' WHERE title LIKE :q_title OR author LIKE :q_author';
             $args[':q_title'] = '%' . $q . '%';
             $args[':q_author'] = '%' . $q . '%';
         }
 
-        $sql .= ' ORDER BY id ASC';
-
-        if ($limit > 0) {
-            $sql .= ' LIMIT :limit';
+        $countSql = 'SELECT COUNT(*) FROM books' . $whereSql;
+        $countStmt = Database::pdo()->prepare($countSql);
+        foreach ($args as $key => $value) {
+            $countStmt->bindValue($key, $value, PDO::PARAM_STR);
         }
+        $countStmt->execute();
+        $total = (int) $countStmt->fetchColumn();
+        $totalPages = max(1, (int) ceil($total / $limit));
+
+        if ($page > $totalPages) {
+            $page = $totalPages;
+            $offset = ($page - 1) * $limit;
+        }
+
+        $sql = 'SELECT id, title, author, year, genre, created_at, updated_at FROM books'
+            . $whereSql
+            . ' ORDER BY id ASC LIMIT :limit OFFSET :offset';
 
         $stmt = Database::pdo()->prepare($sql);
         foreach ($args as $key => $value) {
             $stmt->bindValue($key, $value, PDO::PARAM_STR);
         }
-        if ($limit > 0) {
-            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        }
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         $books = $stmt->fetchAll();
 
         return $this->json($res, [
-            'count' => count($books),
+            'count' => $total,
+            'page' => $page,
+            'limit' => $limit,
+            'total_pages' => $totalPages,
             'data' => $books,
         ]);
     }
